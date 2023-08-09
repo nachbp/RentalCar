@@ -43,5 +43,11 @@ namespace Repositories
             _context.Car.Remove(car);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Car>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate)
+        {
+            // Query available cars by checking if there are any overlapping rentals
+            
+        }
     }
 }
