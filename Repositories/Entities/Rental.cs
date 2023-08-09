@@ -23,5 +23,7 @@ namespace Repositories.Entities
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalPrice { get; set; }
+        [Required]
+        public decimal DailyRentalRate { get; set; }
     }
 }
