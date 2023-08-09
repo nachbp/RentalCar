@@ -13,7 +13,7 @@ namespace Services.Interfaces
         Task<IEnumerable<CarDTO>> GetAllCarsAsync();
         Task CreateCarAsync(CarDTO car);
         Task UpdateCarAsync(int id, CarDTO car);
-        Task DeleteCarAsync(int id);
+        Task DeleteCarAsync(int id);                 
     }
 }
 

@@ -14,5 +14,6 @@ namespace Services.Interfaces
         Task CreateRentalAsync(RentalDTO rentalDto);
         Task UpdateRentalAsync(int id, RentalDTO rentalDto);
         Task DeleteRentalAsync(int id);
+        Task<decimal> ReturnCarsAsync(int id, DateTime returnDate);        
     }
 }
