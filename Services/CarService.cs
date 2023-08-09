@@ -58,6 +58,28 @@ namespace Services
             {
                 await _carRepository.DeleteAsync(car);
             }
+        }        
+
+        public decimal CalculatePrice(RentalDTO rentalDto)
+        {
+            decimal totalPrice = 0;
+
+            foreach (int carId in rentalDto.CarId)
+            {
+                var car = _carRepository.GetByIdAsync(carId).GetAwaiter().GetResult();
+                decimal price = CalculateCarPrice(car.DailyRentalRate, rentalDto.RentalDate, rentalDto.ReturnDate);
+                totalPrice += price;
+            }
+
+            return totalPrice;
         }
+
+        private decimal CalculateCarPrice(decimal dailyRentalRate, DateTime startDate, DateTime endDate)
+        {
+            // Implement logic to calculate price based on daily rental rate and rental duration
+            int daysRented = (int)(endDate - startDate).TotalDays;
+            return dailyRentalRate * daysRented;
+        }
+
     }
 }

@@ -61,5 +61,47 @@ namespace Services
                 await _rentalRepository.DeleteAsync(rental);
             }
         }
+
+        private decimal CalculateSurcharge(DateTime expectedReturnDate, DateTime actualReturnDate, decimal dailyRentalRate)
+        {
+            int extraDays = (int)(actualReturnDate - expectedReturnDate).TotalDays;
+            decimal surcharge = 0;
+
+            if (extraDays > 0)
+            {
+                surcharge = dailyRentalRate * extraDays;
+            }
+
+            return surcharge;
+        }
+
+        public async Task<decimal> ReturnCarsAsync(int rentalId, DateTime returnDate)
+        {
+            var rental = await _rentalRepository.GetByIdAsync(rentalId);
+
+            if (rental == null)
+            {
+                throw new ArgumentException("Rental not found.");
+            }
+
+            // Calculate surcharges for late return
+            decimal surcharge = CalculateSurcharge(rental.RentalDate, returnDate, rental.DailyRentalRate);
+
+            // Update rental information
+            rental.ReturnDate = returnDate;
+            rental.TotalPrice += surcharge;
+
+            await _rentalRepository.UpdateAsync(rental);
+
+            return surcharge;
+        }
+
+
+        private decimal CalculateCarPrice(decimal dailyRentalRate, DateTime startDate, DateTime endDate)
+        {
+            // Implement logic to calculate price based on daily rental rate and rental duration
+            int daysRented = (int)(endDate - startDate).TotalDays;
+            return dailyRentalRate * daysRented;
+        }
     }
 }
