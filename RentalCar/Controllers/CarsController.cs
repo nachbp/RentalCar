@@ -72,7 +72,6 @@ namespace RentalCarAPI.Controllers
         {
             await _carService.DeleteCarAsync(id);
             return NoContent();
-        }
-      
+        }    
     }
 }

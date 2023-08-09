@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentalCarAPI.Data;
 using RentalCarAPI.Models;
+using Repositories.Entities;
+using Services;
 using Services.DTO;
 using Services.Interfaces;
 
@@ -73,6 +75,14 @@ namespace RentalCarAPI.Controllers
             await _rentalService.DeleteRentalAsync(id);
             return NoContent();
         }
-        
+
+        // POST: api/Cars
+        [HttpPost("return")]
+        public async Task<IActionResult> ReturnCars([FromBody] RentalDTO rentalDTO)
+        {
+            var surcharge = await _rentalService.ReturnCarsAsync(rentalDTO.Id, rentalDTO.ReturnDate);
+            return Ok(surcharge);
+        }       
+
     }
 }
