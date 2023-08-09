@@ -14,5 +14,6 @@ namespace Repositories.Interfaces
         Task CreateAsync(Car car);
         Task UpdateAsync(Car car);
         Task DeleteAsync(Car car);
+        Task<IEnumerable<Car>> GetAvailableCarsAsync(DateTime startDate, DateTime endDate);
     }
 }
